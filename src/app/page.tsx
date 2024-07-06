@@ -1,7 +1,17 @@
-export default function Home() {
+import { db } from "@/db";
+
+const Home = async () => {
+  const tasks = await db.todo.findMany();
+
   return (
     <main>
-      <h1>Hello</h1>
+      <ul className="flex flex-col gap-3">
+        {tasks.map((todo) => (
+          <li key={todo.id} className={todo.completed ? 'line-through text-gray-500' : 'font-semibold'}>{todo.title}</li>
+        ))}
+      </ul>
     </main>
   );
-}
+};
+
+export default Home;
